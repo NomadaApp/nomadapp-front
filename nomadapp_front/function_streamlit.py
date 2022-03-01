@@ -59,16 +59,19 @@ def on_click_info_button(filters: dict):
 
     st.map(df)
 
-def output(data=None):
+    output(filters)
+
+
+def output(data: dict):
     """
     When the user press the 'info_button', this function is activated.
-    Receives data from the Google API, and display the requested results
-    in the Streamlit app.
+    Send data with the filters to search in Google API
 
     Params:
-        - data
+        - data: dict expected, dictionary with the required filters
     """
-    pass
+    if isinstance(data, dict):
+        return data
 
 
 # Travel
@@ -105,7 +108,6 @@ def travel():
         filters_dict['beach_mountain'] = True
     if co_working:
         filters_dict['coworking'] = True
-
 
     info_button = st.sidebar.button(label='Get Info',
                                     help='Press to get your selected info')

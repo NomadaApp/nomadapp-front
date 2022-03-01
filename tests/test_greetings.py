@@ -1,5 +1,5 @@
 import unittest
-from nomadapp_front import greetings as grt
+from nomadapp_front import send_filters_to_api as grt
 
 
 class TestSpreadsheetApi(unittest.TestCase):
