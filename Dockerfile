@@ -5,4 +5,4 @@ COPY . ./
 RUN python setup.py install
 EXPOSE 8501
 ENTRYPOINT ["streamlit", "run"]
-CMD ["./nomadapp-front/streamlit_main.py"]
+CMD ["./nomadapp_front/streamlit_main.py"]
