@@ -17,7 +17,6 @@ charset-normalizer==2.0.12
 click==8.0.4
 coverage==6.3.1
 cycler==0.11.0
-data-collection @ file:///Users/antoniojimenez/Desktop/Carpeta%20Alumno%20Workfully/3%20-%20Python%20Avanzado/8%20-%20Buenas%20practicas/example_package
 db-dtypes==0.3.1
 debugpy==1.5.1
 decorator==5.1.1
@@ -129,7 +128,6 @@ six==1.16.0
 smmap==5.0.0
 SQLAlchemy==1.4.31
 sqlparse==0.4.2
--e git+https://github.com/aJimenezAdalia/Workfully.git@c53dc5f4620238220fccbbc8110818b24bb170fc#egg=src&subdirectory=3 - Python Avanzado/5 - Testing/ejemplo_hipoteca
 stack-data==0.2.0
 streamlit==1.6.0
 termcolor==1.1.0
