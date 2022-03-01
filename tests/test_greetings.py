@@ -1,11 +1,12 @@
 import unittest
-from nomadapp-front import greetings as grt
+from nomadapp_front import greetings as grt
+
 
 class TestSpreadsheetApi(unittest.TestCase):
     def test_hello(self):
         grt.hello()
-        self.assertEqual(True, True, 'I leave Python!')
+        self.assertEqual(True, True, "I leave Python!")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
-
