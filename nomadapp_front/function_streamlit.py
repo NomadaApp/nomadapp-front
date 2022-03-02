@@ -1,5 +1,4 @@
-
-
+import requests
 import streamlit as st
 from utils import on_click_info_button
 from get_data_from_api import gcp_request_get
@@ -7,10 +6,7 @@ from get_data_from_api import gcp_request_get
 
 # 1. STREAMLIT SETTINGS ...............................................
 def config_page():
-    st.set_page_config(
-        page_title='NomadApp',
-        layout='wide'
-    )
+    st.set_page_config(page_title="NomadApp", layout="wide")
 
 
 # Cache
@@ -112,25 +108,29 @@ output_data = {
 
 # Home
 def home():
-    st.markdown('# NomadApp')
-    st.markdown('Welcome to NomadApp!')
+    st.markdown("# NomadApp")
+    st.markdown("Welcome to NomadApp!")
 
 
+# Travel
 def travel():
-    text_input = st.text_input('Search your address here')
-    st.sidebar.markdown('### Filters:')
+    text_input = st.text_input("Search your address here")
+    st.sidebar.markdown("### Filters:")
 
-    leisure = st.sidebar.checkbox('Leisure')
-    restaurants = st.sidebar.checkbox('Restaurants')
-    education = st.sidebar.checkbox('Education')
-    co_working = st.sidebar.checkbox('CoWorking')
-    st.sidebar.markdown('\n')
-    radius = st.sidebar.slider('Choose the radius (in km)', 1, 10)
+    leisure = st.sidebar.checkbox("Leisure")
+    restaurants = st.sidebar.checkbox("Activities")
+    education = st.sidebar.checkbox("Schools")
+    co_working = st.sidebar.checkbox("CoWorking")
+    st.sidebar.markdown("\n")
+    radius = st.sidebar.slider("Choose the radio (in km)", 1, 10)
+    st.sidebar.markdown("\n\n\n\n")
+
 
     # TODO: Building filters_dict
 
     # Filters Dict - Default
     filters_dict = {
+
         'location': text_input,
         'leisure': False,
         'restaurants': False,
@@ -162,14 +162,5 @@ def travel():
         #on_click_info_button(api_data=api_data)
         on_click_info_button(api_data=output_data,
                              location=text_input)
-
-
-
-
-
-
-
-
-
 
 

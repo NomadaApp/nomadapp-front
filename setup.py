@@ -1,26 +1,26 @@
 from setuptools import setup, find_packages
 import subprocess
 
-with open('README.md') as f:
+with open("README.md") as f:
     readme = f.read()
 
-with open('LICENSE') as f:
+with open("LICENSE") as f:
     lic = f.read()
 
-with open('requirements.txt') as f:
+with open("requirements.txt") as f:
     required = f.read()
 
 setup(
-    name='nomadapp',
-    version='0.0.1',
-    description='nomadapp',
+    name="nomadapp_front",
+    version="0.0.1",
+    description="nomadapp_front",
     long_description=readme,
-    author='Manuel Castillo-Lopez',
-    author_email='manucalop@gmail.com',
-    url='https://github.com/manucalop/nomadapp',
+    author="Manuel Castillo-Lopez",
+    author_email="manucalop@gmail.com",
+    url="https://github.com/nomadaapp/nomadapp_front",
     license=lic,
-    packages=find_packages(exclude=('tests', 'docs')),
-    install_requires=required
+    packages=find_packages(exclude=("tests", "docs")),
+    install_requires=required,
 )
 
 subprocess.run("rm -rf build", shell=True, check=True)
