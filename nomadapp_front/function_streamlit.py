@@ -112,7 +112,8 @@ def travel():
 
     if info_button:
         on_click_info_button(filters_dict)
-        url = "http://192.168.0.102:5000/json-request"
+        # url = "http://192.168.0.102:5000/json-request"
+        url = "https://nomadapp-back-akukb5qdcq-ew.a.run.app/json-request"
         # Llamada al back
-        response = requests.get(url, json=filters_dict)
+        response = requests.get(url, params=filters_dict)
         print(response.json())
