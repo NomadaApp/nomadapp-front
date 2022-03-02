@@ -1,10 +1,11 @@
 
 
 import streamlit as st
-import pandas as pd
+from utils import on_click_info_button
+from get_data_from_api import gcp_request_get
 
 
-# Main page settings
+# 1. STREAMLIT SETTINGS ...............................................
 def config_page():
     st.set_page_config(
         page_title='NomadApp',
@@ -16,102 +17,159 @@ def config_page():
 st.cache(suppress_st_warning=True)
 
 
+# 2. SAMPLE DATA ......................................................
+
+# Output Data - Sample
+output_data = {
+    "Name": {
+        "0": "IES Eijo and Garay",
+        "1": "IES Ortega y Gassett",
+        "2": "IES El Lago",
+        "3": "IES Gran Capit\u00e1n",
+        "4": "IES Emilio Castelar",
+        "5": "I.E.S. SAN ISIDRO",
+        "6": "IES Blas de Otero",
+        "7": "IES Gerardo Diego",
+        "8": "IES Iturralde",
+        "9": "I.E.S. Renacimiento",
+        "10": "Ies Santa Teresa De Jes\u00fas",
+        "11": "I.E.S. Mariano Jos\u00e9 de Larra (High-school)",
+        "12": "Secondary Bilingual Cervantes Institute",
+        "13": "IES Cardenal Cisneros",
+        "14": "I.E.S. PARK ALUCHE",
+        "15": "IES Santa Teresa de Jesus",
+        "16": "IES Isaac Newton",
+        "17": "Instituto San Isidoro de Sevillla",
+        "18": "IES Empress Maria of Austria",
+        "19": "I.E.S. Juan de La Cierva"},
+    "lat": {
+        "0": 40.4080381,
+        "1": 40.4316436,
+        "2": 40.4156612,
+        "3": 40.4036056,
+        "4": 40.3883572,
+        "5": 40.4126691,
+        "6": 40.3890626,
+        "7": 40.443267,
+        "8": 40.3861044,
+        "9": 40.3936682,
+        "10": 40.4206152,
+        "11": 40.3878669,
+        "12": 40.4059367,
+        "13": 40.424465,
+        "14": 40.3904061,
+        "15": 40.4204545,
+        "16": 40.4730134,
+        "17": 40.4455389,
+        "18": 40.3875901,
+        "19": 40.4023011},
+    "lon": {
+        "0": -3.7385759,
+        "1": -3.7357291,
+        "2": -3.7328165,
+        "3": -3.7199915,
+        "4": -3.7302832,
+        "5": -3.7073444,
+        "6": -3.7621458,
+        "7": -3.787076,
+        "8": -3.751705,
+        "9": -3.7384516,
+        "10": -3.7107258,
+        "11": -3.7538598,
+        "12": -3.7031812,
+        "13": -3.7085845,
+        "14": -3.76395,
+        "15": -3.7103158,
+        "16": -3.7214324,
+        "17": -3.7187209,
+        "18": -3.7168563,
+        "19": -3.7063803},
+    "Type": {
+        "0": "Education",
+        "1": "Education",
+        "2": "Education",
+        "3": "Education",
+        "4": "Education",
+        "5": "Education",
+        "6": "Education",
+        "7": "Education",
+        "8": "Education",
+        "9": "Education",
+        "10": "Education",
+        "11": "Education",
+        "12": "Education",
+        "13": "Education",
+        "14": "Education",
+        "15": "Education",
+        "16": "Education",
+        "17": "Education",
+        "18": "Education",
+        "19": "Education"}}
+
+
+# 3. FRONT-END FUNCTIONALITY ..........................................
+
+
 # Home
 def home():
     st.markdown('# NomadApp')
     st.markdown('Welcome to NomadApp!')
 
 
-# User filters
-user_filters = ('leisure',
-                'activities',
-                'schools',
-                'beach/mountain',
-                'co-working')
-
-
-def on_click_info_button(filters: dict):
-    """
-    Receives a dictionary of the selected parameters by the user.
-    This information will be used to make the request to Google API.
-
-    Params:
-        - filters: dict expected
-    Return:
-        - filters: dict, parameters to make the request
-    Raises:
-        - TypeError if 'filters' type is not dict
-    """
-    if isinstance(filters, dict):
-        # TEST
-        st.markdown('## FILTERS SELECTED:')
-        for filter_type, boolean in filters.items():
-            if filter_type == 'radio':
-                st.markdown(f'#### Selected Radio: {boolean} km')
-            elif boolean:
-                st.markdown(f'#### {filter_type.capitalize()}')
-        # return filters
-    else:
-        raise TypeError(f'Dict expected, received {type(filters)}.')
-
-    df = pd.DataFrame({'lat': [40.4279488, ],
-                       'lon': [-3.68675]})
-
-    st.map(df)
-
-    output(filters)
-
-
-def output(data: dict):
-    """
-    When the user press the 'info_button', this function is activated.
-    Send data with the filters to search in Google API
-
-    Params:
-        - data: dict expected, dictionary with the required filters
-    """
-    if isinstance(data, dict):
-        return data
-
-
-# Travel
 def travel():
-    st.text_input('Search your address here')
+    text_input = st.text_input('Search your address here')
     st.sidebar.markdown('### Filters:')
 
     leisure = st.sidebar.checkbox('Leisure')
-    activities = st.sidebar.checkbox('Activities')
-    schools = st.sidebar.checkbox('Schools')
-    beach_mountain = st.sidebar.checkbox('Beach-Mountain')
+    restaurants = st.sidebar.checkbox('Restaurants')
+    education = st.sidebar.checkbox('Education')
     co_working = st.sidebar.checkbox('CoWorking')
     st.sidebar.markdown('\n')
-    radio = st.sidebar.slider('Choose the radio (in km)',
-                              1, 10)
-    st.sidebar.markdown('\n\n\n\n')
+    radius = st.sidebar.slider('Choose the radius (in km)', 1, 10)
 
-    # Filters Dict
+    # TODO: Building filters_dict
+
+    # Filters Dict - Default
     filters_dict = {
-        'leisures': False,
-        'activities': False,
-        'schools': False,
-        'beach_mountain': False,
+        'location': text_input,
+        'leisure': False,
+        'restaurants': False,
+        'education': False,
         'coworking': False,
-        'radio': radio}
+        'radius': None}
 
     if leisure:
-        filters_dict['leisures'] = True
-    if activities:
-        filters_dict['activities'] = True
-    if schools:
-        filters_dict['schools'] = True
-    if beach_mountain:
-        filters_dict['beach_mountain'] = True
+        filters_dict['leisure'] = True
+    if restaurants:
+        filters_dict['restaurants'] = True
+    if education:
+        filters_dict['education'] = True
     if co_working:
         filters_dict['coworking'] = True
 
+    filters_dict['radius'] = radius
+
+    # Info Button - Physical button
     info_button = st.sidebar.button(label='Get Info',
                                     help='Press to get your selected info')
-
+    # Click on info_button - Requesting data to Google API and showing the map
     if info_button:
-        on_click_info_button(filters_dict)
+        # requesting data
+        # TODO: implementar cuando exista comunicación efectiva
+        #api_data = gcp_request_get(filters_dict)
+        # showing the map with the received data
+        # TODO: implementar cuando exista comunicación efectiva
+        #on_click_info_button(api_data=api_data)
+        on_click_info_button(api_data=output_data,
+                             location=text_input)
+
+
+
+
+
+
+
+
+
+
 

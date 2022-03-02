@@ -13,7 +13,7 @@ st.cache(suppress_st_warning=True)
 
 # Sidebar - Menu
 menu = st.sidebar.selectbox('Menu',
-    ['Home', 'Travel'])
+                            ['Home', 'Travel'])
 
 if menu == 'Home':
     ft.home()
