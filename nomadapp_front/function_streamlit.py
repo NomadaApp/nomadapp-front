@@ -118,11 +118,11 @@ def travel():
     st.sidebar.markdown("### Filters:")
 
     leisure = st.sidebar.checkbox("Leisure")
-    restaurants = st.sidebar.checkbox("Activities")
-    education = st.sidebar.checkbox("Schools")
+    restaurants = st.sidebar.checkbox("Restaurants")
+    education = st.sidebar.checkbox("Education")
     co_working = st.sidebar.checkbox("CoWorking")
     st.sidebar.markdown("\n")
-    radius = st.sidebar.slider("Choose the radio (in km)", 1, 10)
+    radius = st.sidebar.slider("Choose the radius (in km)", 1, 10)
     st.sidebar.markdown("\n\n\n\n")
 
 
