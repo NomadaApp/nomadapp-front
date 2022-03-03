@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import json
+import pandas_gbq
 
 
 def on_click_info_button(api_data: dict, location: str, radius: int):
