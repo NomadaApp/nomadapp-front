@@ -130,7 +130,6 @@ def travel():
 
     # Filters Dict - Default
     filters_dict = {
-
         'location': text_input,
         'leisure': False,
         'restaurants': False,
