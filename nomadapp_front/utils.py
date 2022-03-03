@@ -26,18 +26,21 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
             # Building DataFrame from Dictionary
             # The received object is dict-type; converting to JSON
             json_object = json.dumps(api_data)
-            df = pd.read_json(json_object)
-            df = df[df['distance_from_location'] <= radius].reset_index(drop=True)
-            # Showing selections
-            st.markdown(f' ## *{location}*')
-            for location_type in list(df.Type.value_counts().index):
-                with st.expander(f'{location_type}'):
-                    st.write(f'There are {len(df[df.Type == location_type])} {location_type} places around your position')
-            # Showing the map - Default zoom: 11
-            st.map(df)
-            df = df.drop(['lat', 'lon'], axis=1)
-            df.columns = ['Name', 'Position', 'Distance', 'Type']
-            st.write(df)
+            try:
+                df = pd.read_json(json_object)
+                df = df[df['distance_from_location'] <= radius].reset_index(drop=True)
+                # Showing selections
+                st.markdown(f' ## *{location}*')
+                for location_type in list(df.Type.value_counts().index):
+                    with st.expander(f'{location_type}'):
+                        st.write(f'There are {len(df[df.Type == location_type])} {location_type} places around your position')
+                # Showing the map - Default zoom: 11
+                st.map(df)
+                df = df.drop(['lat', 'lon'], axis=1)
+                df.columns = ['Name', 'Position', 'Distance', 'Type']
+                st.write(df)
+            except Exception:
+                st.markdown('## Unexpected error. Please try again.')
         else:
             raise TypeError(f'Str expected, received {type(location)}.')
     else:
