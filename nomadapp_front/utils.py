@@ -5,7 +5,7 @@ import pandas as pd
 import json
 
 
-def on_click_info_button(api_data: dict, location: str):
+def on_click_info_button(api_data: dict, location: str, radius: int):
     """
     Receives a dictionary of the selected parameters by the user.
     This information will be used to make the request to Google API.
@@ -27,7 +27,7 @@ def on_click_info_button(api_data: dict, location: str):
             # The received object is dict-type; converting to JSON
             json_object = json.dumps(api_data)
             df = pd.read_json(json_object)
-
+            df = df[df['distance_from_location'] <= radius].reset_index(drop=True)
             # Showing selections
             st.markdown(f' ## *{location}*')
             for location_type in list(df.Type.value_counts().index):
