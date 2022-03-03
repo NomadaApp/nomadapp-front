@@ -35,6 +35,8 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
                     st.write(f'There are {len(df[df.Type == location_type])} {location_type} places around your position')
             # Showing the map - Default zoom: 11
             st.map(df)
+            df = df.drop(['lat', 'lon'], axis=1)
+            df.columns = ['Name', 'Position', 'Distance', 'Type']
             st.write(df)
         else:
             raise TypeError(f'Str expected, received {type(location)}.')
