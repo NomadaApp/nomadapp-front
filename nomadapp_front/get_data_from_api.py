@@ -17,10 +17,11 @@ def gcp_request_get(query: dict):
     Google API.
 
     Params:
-        - query: dict expected, dictionary with the request parameters
+        - query: dict expected, dictionary with the request parameters.
+
     Returns:
-        - st.delta_generator.DeltaGenerator object if bad request
-        - Dictionary with the received data from the API, if the request
+        - st.delta_generator.DeltaGenerator object: if bad request
+        - Dictionary with the received data from the API: if the request
         was successfully made
     """
     # Back-End API URL
