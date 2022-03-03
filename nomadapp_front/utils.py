@@ -3,11 +3,7 @@
 import streamlit as st
 import pandas as pd
 import json
-import streamlit
 
-
-# TODO: el argumento son los datos recibidos de la API de Rubén
-# BUILDING NEW FUNCTION ON-CLICK ####################################
 
 def on_click_info_button(api_data: dict, location: str):
     """
@@ -15,13 +11,15 @@ def on_click_info_button(api_data: dict, location: str):
     This information will be used to make the request to Google API.
 
     Params:
-        - filters: dict expected,
+        - api_data: dict expected, data from the Google Maps API
+        - location, str expected, selected location by the user
     Return:
-        - filters: dict, parameters to make the request
+        - None if the address field is empty (no address to make the request)
     Raises:
-        - TypeError if 'filters' type is not dict
+        - TypeError if 'api_data' type is not dict
+        - TypeError if 'location' type is not string
     """
-    if isinstance(api_data, streamlit.delta_generator.DeltaGenerator):
+    if isinstance(api_data, st.delta_generator.DeltaGenerator):
         return None
     elif isinstance(api_data, dict):
         if isinstance(location, str):
@@ -32,11 +30,12 @@ def on_click_info_button(api_data: dict, location: str):
 
             # Showing selections
             st.markdown(f' ## *{location}*')
-            st.markdown('### SELECTED FILTERS:')
             for location_type in list(df.Type.value_counts().index):
-                st.markdown(f'#### - {location_type}')
+                with st.expander(f'{location_type}'):
+                    st.write(f'There are {len(df[df.Type == location_type])} {location_type} places around your position')
             # Showing the map - Default zoom: 11
-            st.map(df, zoom=11)
+            st.map(df)
+            st.write(df)
         else:
             raise TypeError(f'Str expected, received {type(location)}.')
     else:

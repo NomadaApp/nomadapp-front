@@ -1,25 +1,36 @@
 
 
 import requests
-import json
 import streamlit as st
-
-filters_dict = {
-        'location': 'Puerta del Sol, 1 Madrid',
-        'leisure': True,
-        'restaurants': True,
-        'education': True,
-        'coworking': True,
-        'radius': 5}
 
 
 # DATA FROM GOOGLE API
-def gcp_request_get(query):
+def gcp_request_get(query: dict):
+    """
+    Makes a request to the back-end API with a list of parameters,
+    passed as dictionary.
+
+    The request returns the required information by the user, based on
+    the selected address.
+
+    This functions returns a dictionary with the requested data from
+    Google API.
+
+    Params:
+        - query: dict expected, dictionary with the request parameters
+    Returns:
+        - st.delta_generator.DeltaGenerator object if bad request
+        - Dictionary with the received data from the API, if the request
+        was successfully made
+    """
+    # Back-End API URL
     url = "https://nomadapp-back-akukb5qdcq-ew.a.run.app/json-request"
+    # Making the request with the collected parameters
     response = requests.get(url, params=query)
+    # Exceptions - Bad Requests
     if str(response) == '<Response [500]>':
-        return st.markdown("## Error. Internal Server Error. Can't get required information")
+        return st.markdown("## Error. Internal Server Error. Can't get required information.")
+    elif str(response).startswith('<Response [4'):
+        return st.markdown("## Error. Communication can't be established. Try again later.")
+    # Returns a dictionary with the collected data, if the request was successfully
     return eval(response.json())
-
-
-
