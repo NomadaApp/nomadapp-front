@@ -3,6 +3,7 @@
 import streamlit as st
 import pandas as pd
 import json
+import streamlit
 
 
 # TODO: el argumento son los datos recibidos de la API de Rubén
@@ -20,7 +21,9 @@ def on_click_info_button(api_data: dict, location: str):
     Raises:
         - TypeError if 'filters' type is not dict
     """
-    if isinstance(api_data, dict):
+    if isinstance(api_data, streamlit.delta_generator.DeltaGenerator):
+        return None
+    elif isinstance(api_data, dict):
         if isinstance(location, str):
             # Building DataFrame from Dictionary
             # The received object is dict-type; converting to JSON
