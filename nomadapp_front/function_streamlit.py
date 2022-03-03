@@ -155,11 +155,11 @@ def travel():
     if info_button:
         # requesting data
         # TODO: implementar cuando exista comunicación efectiva
-        #api_data = gcp_request_get(filters_dict)
+        api_data = gcp_request_get(filters_dict)
         # showing the map with the received data
         # TODO: implementar cuando exista comunicación efectiva
-        #on_click_info_button(api_data=api_data)
-        on_click_info_button(api_data=output_data,
-                             location=text_input)
+        on_click_info_button(api_data=api_data, location=text_input)
+        # on_click_info_button(api_data=output_data,
+        #                      location=text_input)
 
 
