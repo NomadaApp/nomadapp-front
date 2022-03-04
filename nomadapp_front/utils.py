@@ -37,7 +37,7 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
             # Showing the map - Default zoom: 11
             st.map(df)
             df = df.drop(["lat", "lon"], axis=1)
-            df.columns = ["Name", "Position", "Distance", "Type"]
+            df.columns = ["Name", "Position", "Distance", "Type", "Rating"]
             st.write(df)
             df["Position"] = ", ".join(df["Position"])[1:-1]
             df.to_gbq(
