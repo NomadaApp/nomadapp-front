@@ -23,18 +23,20 @@ def home():
     """Home page of Streamlit Front-End"""
     st.markdown("# NomadApp")
     st.markdown("Welcome to NomadApp!")
+    im = 'https://aviationvoice.com/wp-content/uploads/2017/03/US-Electronics-Ban-To-Affect-18000-Daily-Passengers.jpg'
+    st.image(im, caption='Working at the airport. Source: aviationvoice.com')
 
 
 # Travel
 def travel():
     """
-    Widgets, SideBar Menu and buttons and settings of the 'Travel' page of
+    Widgets, SideBar Menu, buttons and settings of the 'Travel' page of
     Streamlit Front-End.
 
     The page has a left-side menu with 'Filters' -check-buttons- and a slider,
     to define the user's radio around his geo-position.
     The button 'Get Info' makes the call to the back-end API with the
-    collected info via check-buttons, and the 'Address' field, implemented on
+    collected info via check-buttons and the 'Address' field, implemented on
     the main side of the page.
 
     All the data will be stored in a parameter dictionary, used as argument to
@@ -87,4 +89,4 @@ def travel():
         # requesting data
         api_data = gcp_request_get(query=filters_dict)
         # showing the map with the received data
-        on_click_info_button(api_data=api_data, location=text_input)
+        on_click_info_button(api_data=api_data, location=text_input, radius=radius)
