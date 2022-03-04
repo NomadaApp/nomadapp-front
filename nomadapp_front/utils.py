@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import json
-import pandas_gbq
 
 
 def on_click_info_button(api_data: dict, location: str, radius: int):
@@ -37,9 +36,8 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
             # Showing the map - Default zoom: 11
             st.map(df)
             df = df.drop(["lat", "lon"], axis=1)
-            df.columns = ["Name", "Position", "Distance", "Type"]
+            df.columns = ["Name", "Position", "Distance", "Rating", "Type"]
             st.write(df)
-            df["Position"] = ", ".join(df["Position"])[1:-1]
             df.to_gbq(
                 "nomadapp.user-queries",
                 project_id="cocktail-bootcamp",
