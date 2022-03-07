@@ -28,7 +28,7 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
             df = pd.read_json(json_object)
             df = df[df["distance_from_location"] <= radius].reset_index(drop=True)
             # Showing selections
-            st.markdown(f" ## *{location}*")
+            st.markdown(f" ## *{location.capitalize()}*")
             for location_type in list(df.Type.value_counts().index):
                 with st.expander(f"{location_type}"):
                     st.write(
@@ -36,8 +36,8 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
                     )
             # Showing the map - Default zoom: 11
             st.map(df)
-            df = df.drop(["lat", "lon"], axis=1)
-            df.columns = ["Name", "Position", "Distance", "Rating", "Type"]
+            df = df.drop(["lat", "lon", "coord"], axis=1)
+            df.columns = ["Name", "Distance", "Rating", "Type"]
             st.write(df)
             df.to_gbq(
                 "nomadapp.user-queries",
