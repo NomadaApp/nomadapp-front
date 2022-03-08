@@ -3,6 +3,14 @@ import pandas as pd
 import json
 import numpy as np
 import pandas_gbq
+import logging
+
+# Logging
+logging.basicConfig(
+    filename='nomadapp.log',
+    filemode='w',
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO)
 
 
 def on_click_info_button(api_data: dict, location: str, radius: int):
@@ -20,9 +28,11 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
         - TypeError if 'location' type is not string
     """
     if isinstance(api_data, st.delta_generator.DeltaGenerator):
+        logging.warning(f'Wrong api data type; expected dict, received {type(api_data)}')
         return None
     elif isinstance(api_data, dict):
         if api_data.get('Error'):
+            logging.error('No results or incomplete information received from the API ')
             st.markdown(f'No results received from API. {api_data["Error"]}')
         if isinstance(location, str):
             # Building DataFrame from Dictionary
@@ -53,7 +63,9 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
                     project_id="cocktail-bootcamp",
                     if_exists="append",
                 )
+                logging.info('Data successfully ingested on BigQuery table')
             except:
+                logging.warning("The data wasn't ingested on BigQuery table. The program continues.")
                 pass
         else:
             st.markdown(f" ")
