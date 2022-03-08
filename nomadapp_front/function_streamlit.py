@@ -1,7 +1,7 @@
 import streamlit as st
 import logging
-from .utils import on_click_info_button
-from .get_data_from_api import gcp_request_get
+from utils import on_click_info_button
+from get_data_from_api import gcp_request_get
 
 
 # 1. LOGGER .................................................................
