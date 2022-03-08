@@ -3,9 +3,18 @@
 import streamlit as st
 from utils import on_click_info_button
 from get_data_from_api import gcp_request_get
+import logging
 
 
-# 1. STREAMLIT SETTINGS .....................................................
+# 1. LOGGER .................................................................
+logging.basicConfig(
+    filename='nomadapp.log',
+    filemode='w',
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO,
+    force=True)
+
+# 2. STREAMLIT SETTINGS .....................................................
 def config_page():
     """Streamlit main settings"""
     st.set_page_config(page_title="NomadApp", layout="wide")
@@ -14,8 +23,7 @@ def config_page():
 # Cache
 st.cache(suppress_st_warning=True)
 
-
-# 2. FRONT-END FUNCTIONALITY .................................................
+# 3. FRONT-END FUNCTIONALITY .................................................
 
 
 # Home
@@ -87,6 +95,8 @@ def travel():
     # Click on info_button - Requesting data to Google API and showing the map
     if info_button:
         # requesting data
+        logging.info('User requested information. Calling api_data function.')
         api_data = gcp_request_get(query=filters_dict)
         # showing the map with the received data
+        logging.info('Calling on_click_info_button function.')
         on_click_info_button(api_data=api_data, location=text_input, radius=radius)
