@@ -1,28 +1,4 @@
-2022-03-08 10:09:29,179 - root - INFO - User requested information. Calling api_data function.
-2022-03-08 10:09:29,319 - root - ERROR - Error accessing the API; error code: <Response [500]>
-2022-03-08 10:09:29,320 - root - INFO - Calling on_click_info_button function.
-2022-03-08 10:09:29,320 - root - WARNING - Wrong api data type; expected dict, received <class 'streamlit.delta_generator.DeltaGenerator'>
-2022-03-08 10:09:57,206 - root - INFO - User requested information. Calling api_data function.
-2022-03-08 10:09:59,069 - root - INFO - Calling on_click_info_button function.
-2022-03-08 10:10:04,083 - google.auth.compute_engine._metadata - WARNING - Compute Engine Metadata server unavailable on attempt 1 of 3. Reason: timed out
-2022-03-08 10:10:07,085 - google.auth.compute_engine._metadata - WARNING - Compute Engine Metadata server unavailable on attempt 2 of 3. Reason: timed out
-2022-03-08 10:10:07,089 - google.auth.compute_engine._metadata - WARNING - Compute Engine Metadata server unavailable on attempt 3 of 3. Reason: [Errno 64] Host is down
-2022-03-08 10:10:07,089 - google.auth._default - WARNING - Authentication failed using Compute Engine authentication due to unavailable metadata server.
-2022-03-08 10:10:10,453 - pandas_gbq.gbq - INFO - 26 out of 26 rows loaded.
-2022-03-08 10:10:10,453 - root - INFO - Data successfully ingested on BigQuery table
-2022-03-08 10:10:45,566 - root - INFO - User requested information. Calling api_data function.
-2022-03-08 10:10:47,433 - root - INFO - Calling on_click_info_button function.
-2022-03-08 10:10:50,416 - pandas_gbq.gbq - INFO - 37 out of 37 rows loaded.
-2022-03-08 10:10:50,416 - root - INFO - Data successfully ingested on BigQuery table
-2022-03-08 10:10:59,877 - root - INFO - User requested information. Calling api_data function.
-2022-03-08 10:11:01,296 - root - INFO - Calling on_click_info_button function.
-2022-03-08 10:11:04,028 - pandas_gbq.gbq - INFO - 4 out of 4 rows loaded.
-2022-03-08 10:11:04,028 - root - INFO - Data successfully ingested on BigQuery table
-2022-03-08 10:11:36,164 - root - INFO - User requested information. Calling api_data function.
-2022-03-08 10:11:37,817 - root - INFO - Calling on_click_info_button function.
-2022-03-08 10:11:40,730 - pandas_gbq.gbq - INFO - 18 out of 18 rows loaded.
-2022-03-08 10:11:40,730 - root - INFO - Data successfully ingested on BigQuery table
-2022-03-08 10:12:12,554 - root - INFO - User requested information. Calling api_data function.
-2022-03-08 10:12:14,277 - root - INFO - Calling on_click_info_button function.
-2022-03-08 10:12:19,272 - pandas_gbq.gbq - INFO - 20 out of 20 rows loaded.
-2022-03-08 10:12:19,272 - root - INFO - Data successfully ingested on BigQuery table
+2022-03-08 15:29:48,573 - root - INFO - User requested information. Calling api_data function.
+2022-03-08 15:29:48,793 - root - INFO - Calling on_click_info_button function.
+2022-03-08 15:29:57,869 - root - INFO - User requested information. Calling api_data function.
+2022-03-08 15:29:58,084 - root - INFO - Calling on_click_info_button function.
