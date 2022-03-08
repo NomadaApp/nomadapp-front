@@ -49,6 +49,10 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
                     st.write(
                         f"There are {len(df[df.Type == location_type])} {location_type} places around your position"
                     )
+            # If df is empty, we show a message instead
+            if len(df) == 0:
+                st.markdown('## No results found.')
+                return None
             # Showing the map - Default zoom: 11
             st.map(df)
             df = df.drop(["lat", "lon", "coord"], axis=1)
