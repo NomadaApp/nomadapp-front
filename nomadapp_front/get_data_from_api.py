@@ -30,8 +30,11 @@ def gcp_request_get(query: dict):
     response = requests.get(url, params=query)
     # Exceptions - Bad Requests
     if str(response) == '<Response [500]>':
-        return st.markdown("## Error. Internal Server Error. Can't get required information.")
+        return st.markdown(f"### The address seems to be wrong or incomplete.")
     elif str(response).startswith('<Response [4'):
-        return st.markdown("## Error. Communication can't be established. Try again later.")
+        return st.markdown(f"### The address seems to be wrong or incomplete.")
     # Returns a dictionary with the collected data, if the request was successfully
-    return eval(response.json())
+    try:
+        return eval(response.json())
+    except TypeError:
+        st.markdown("### The address seems to be wrong or incomplete.")

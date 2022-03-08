@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import json
+import numpy as np
 import pandas_gbq
 
 
@@ -21,6 +22,8 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
     if isinstance(api_data, st.delta_generator.DeltaGenerator):
         return None
     elif isinstance(api_data, dict):
+        if api_data.get('Error'):
+            st.markdown(f'No results received from API. {api_data["Error"]}')
         if isinstance(location, str):
             # Building DataFrame from Dictionary
             # The received object is dict-type; converting to JSON
@@ -28,7 +31,9 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
             df = pd.read_json(json_object)
             df = df[df["distance_from_location"] <= radius].reset_index(drop=True)
             # Showing selections
-            st.markdown(f" ## *{location.capitalize()}*")
+            location_list = location.split(" ")
+            location = " ".join([location.capitalize() for location in location_list])
+            st.markdown(f" ## *{location}*")
             for location_type in list(df.Type.value_counts().index):
                 with st.expander(f"{location_type}"):
                     st.write(
@@ -38,13 +43,19 @@ def on_click_info_button(api_data: dict, location: str, radius: int):
             st.map(df)
             df = df.drop(["lat", "lon", "coord"], axis=1)
             df.columns = ["Name", "Distance", "Rating", "Type"]
+            # DataFrame visualization improving
+            df['Rating'] = df['Rating'].astype(str).str[:3]
             st.write(df)
-            df.to_gbq(
-                "nomadapp.user-queries",
-                project_id="cocktail-bootcamp",
-                if_exists="append",
-            )
+            df['Rating'] = pd.to_numeric(df['Rating'])
+            try:
+                df.to_gbq(
+                    "nomadapp.user-queries",
+                    project_id="cocktail-bootcamp",
+                    if_exists="append",
+                )
+            except:
+                pass
         else:
-            raise TypeError(f"Str expected, received {type(location)}.")
+            st.markdown(f" ")
     else:
-        raise TypeError(f"Dict expected, received {type(api_data)}.")
+        st.markdown(f" ")
