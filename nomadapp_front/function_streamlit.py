@@ -1,18 +1,17 @@
-
-
 import streamlit as st
-from utils import on_click_info_button
-from get_data_from_api import gcp_request_get
 import logging
+from .utils import on_click_info_button
+from .get_data_from_api import gcp_request_get
 
 
 # 1. LOGGER .................................................................
 logging.basicConfig(
-    filename='nomadapp.log',
-    filemode='w',
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    filename="nomadapp.log",
+    filemode="w",
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     level=logging.INFO,
-    force=True)
+    force=True,
+)
 
 # 2. STREAMLIT SETTINGS .....................................................
 def config_page():
@@ -31,8 +30,8 @@ def home():
     """Home page of Streamlit Front-End"""
     st.markdown("# NomadApp")
     st.markdown("Welcome to NomadApp!")
-    im = 'https://aviationvoice.com/wp-content/uploads/2017/03/US-Electronics-Ban-To-Affect-18000-Daily-Passengers.jpg'
-    st.image(im, caption='Working at the airport. Source: aviationvoice.com')
+    im = "https://aviationvoice.com/wp-content/uploads/2017/03/US-Electronics-Ban-To-Affect-18000-Daily-Passengers.jpg"
+    st.image(im, caption="Working at the airport. Source: aviationvoice.com")
 
 
 # Travel
@@ -70,33 +69,35 @@ def travel():
 
     # Filters Dict - Default
     filters_dict = {
-        'location': text_input,
-        'leisure': False,
-        'restaurants': False,
-        'education': False,
-        'coworking': False,
-        'radius': None}
+        "location": text_input,
+        "leisure": False,
+        "restaurants": False,
+        "education": False,
+        "coworking": False,
+        "radius": None,
+    }
 
     # Building the dictionary
     if leisure:
-        filters_dict['leisure'] = True
+        filters_dict["leisure"] = True
     if restaurants:
-        filters_dict['restaurants'] = True
+        filters_dict["restaurants"] = True
     if education:
-        filters_dict['education'] = True
+        filters_dict["education"] = True
     if co_working:
-        filters_dict['coworking'] = True
+        filters_dict["coworking"] = True
 
-    filters_dict['radius'] = radius * 1000
+    filters_dict["radius"] = radius * 1000
 
     # Info Button - Physical button
-    info_button = st.sidebar.button(label='Get Info',
-                                    help='Press to get your selected info')
+    info_button = st.sidebar.button(
+        label="Get Info", help="Press to get your selected info"
+    )
     # Click on info_button - Requesting data to Google API and showing the map
     if info_button:
         # requesting data
-        logging.info('User requested information. Calling api_data function.')
+        logging.info("User requested information. Calling api_data function.")
         api_data = gcp_request_get(query=filters_dict)
         # showing the map with the received data
-        logging.info('Calling on_click_info_button function.')
+        logging.info("Calling on_click_info_button function.")
         on_click_info_button(api_data=api_data, location=text_input, radius=radius)
